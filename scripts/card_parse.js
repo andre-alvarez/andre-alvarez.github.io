@@ -220,5 +220,7 @@ function drawData(data) {
 }
 
 function windowResized() {
-    resizeCanvas(card_width*3+1, card_height*row+1,P2D);
+  console.log("windowResized"); 
+  console.log(row); 
+  resizeCanvas(card_width*3+1, card_height*row+1);
 }
