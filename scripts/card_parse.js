@@ -49,10 +49,12 @@ for (var j=0; j<deckList.length; j++){
   }
   arrayCards = arrayCards.concat(tmpArrays);
   console.log(arrayCards);
+  console.log(arrayCards.length);
 }
 
 function setup() {
-  createCanvas(card_width*3+1, card_height*4+1,P2D);
+  console.log(Math.ceil(arrayCards.length/3));
+  createCanvas(card_width*3+1, card_height*(Math.ceil(arrayCards.length/3))+1,P2D);
   noStroke();
   textSize(txt_size);
   loadJSON("cards.json", drawData);
@@ -217,10 +219,4 @@ function drawData(data) {
     element.parentNode.removeChild(element);
     return cardHEX;
   }
-}
-
-function windowResized() {
-  console.log("windowResized"); 
-  console.log(row); 
-  resizeCanvas(card_width*3+1, card_height*row+1);
 }
