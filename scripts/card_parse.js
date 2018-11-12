@@ -20,7 +20,7 @@ var arrayCards = [];
 var tmpArrays = [];
 var pdf;
 
-  console.log(window.location.search);
+console.log(window.location.search);
 var user_input_data = window.location.search; 
 //?deck-name=deck+name&deck-list=1+jnnnl%0D%0A2+jnlkmklmlm
 user_input_data = user_input_data.split("&");
@@ -187,7 +187,6 @@ function drawData(data) {
         pdf.save();
     }
   }
-  
   function colorHEX(cardColor) {
     console.log(cardColor);
     if (cardColor === "White"){
@@ -218,6 +217,8 @@ function drawData(data) {
     element.parentNode.removeChild(element);
     return cardHEX;
   }
-  
-  
+}
+
+function windowResized() {
+    resizeCanvas(card_width*3+1, card_height*row+1,P2D);
 }
