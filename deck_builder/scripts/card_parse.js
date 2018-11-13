@@ -19,6 +19,7 @@ var pt_y = pt_rect_y + (pt_height)/2;
 var arrayCards = [];
 var tmpArrays = [];
 var pdf;
+var page_numb = 1;
 
 console.log(window.location.search);
 var user_input_data = window.location.search; 
@@ -191,6 +192,8 @@ function drawData(data) {
         height: card_height * 3
       });
     } else if(i % 9 == 0){
+      page_numb++;
+      console.log("new page " + page_numb)
       pdf.nextPage();  
     }
   }
