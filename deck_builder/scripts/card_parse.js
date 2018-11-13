@@ -54,7 +54,7 @@ for (var j=0; j<deckList.length; j++){
 
 function setup() {
   console.log(Math.ceil(arrayCards.length/3));
-  createCanvas(card_width*3+1, card_height*(Math.ceil(arrayCards.length/3))+1,P2D);
+  createCanvas(card_width*3+1, card_height*(Math.ceil(arrayCards.length/3))+1,SVG);
   noStroke();
   textSize(txt_size);
   loadJSON("cards.json", drawData);
