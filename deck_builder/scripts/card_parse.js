@@ -1,11 +1,11 @@
 var col_cnt = 0;
 var row_cnt = 0;
-var txt_size = 20;
-var card_width = 500; //px
+var txt_size = 10;
+var card_width = 240.231; //px
 var card_height = card_width * 1.4; //px
-var h_margin = 10; //px
-var rect_rad = 10;
-var name_type_dist = 200;
+var h_margin = 5; //px
+var rect_rad = 5;
+var name_type_dist = 100;
 var v_margin = txt_size/2 + rect_rad;
 var main_rect_y = v_margin/2 + rect_rad
 var name_rect_y = h_margin;
@@ -207,13 +207,13 @@ function drawData(data) {
       pdf.save({
         filename: deckName,
         margin: {
-          top: '100px',
-          left: '100px',
-          right: '100px',
-          bottom: '100px'
+          top: '0px',
+          left: '0px',
+          right: '0px',
+          bottom: '0px'
         },
-        width: card_width * 3 + 2*100,
-        height: card_height * 3 + 2*100
+        width: card_width * 3 + 2*0,
+        height: card_height * 3 + 2*0
       });
     } else if((i+1) % 0 == 0){
       page_numb++;
