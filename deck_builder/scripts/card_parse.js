@@ -57,7 +57,7 @@ function setup() {
   createCanvas(card_width*3+1, card_height*(Math.ceil(arrayCards.length/3))+1,SVG);
   noStroke();
   textSize(txt_size);
-  loadJSON("cards.json", drawData);
+  loadJSON("AllCards-x.json", drawData);
   pdf = createPDF();
   pdf.beginRecord();
 }
