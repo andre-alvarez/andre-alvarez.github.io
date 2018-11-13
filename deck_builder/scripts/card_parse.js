@@ -22,7 +22,6 @@ var pdf;
 
 console.log(window.location.search);
 var user_input_data = window.location.search; 
-//?deck-name=deck+name&deck-list=1+jnnnl%0D%0A2+jnlkmklmlm
 user_input_data = user_input_data.split("&");
   console.log(window.location.search);
 var deckName = user_input_data[0].replace("?deck-name=","");
