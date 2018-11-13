@@ -193,8 +193,8 @@ function drawData(data) {
           right: '100px',
           bottom: '100px'
         },
-        width: card_width * 3 + 100 * 2,
-        height: card_height * 3 + 100 * 2
+        width: card_width * 3
+        height: card_height * 3
       });
     } else if(i % 9 == 0){
       pdf.nextPage();  
