@@ -207,13 +207,13 @@ function drawData(data) {
       pdf.save({
         filename: deckName,
         margin: {
-          top: '0px',
-          left: '0px',
-          right: '0px',
-          bottom: '0px'
+          top: '10px',
+          left: '10px',
+          right: '10px',
+          bottom: '10px'
         },
-        width: card_width * 3 + 2*0,
-        height: card_height * 3 + 2*0
+        width: card_width * 3 + 2*10,
+        height: card_height * 3 + 2*10
       });
     } else if((i+1) % 0 == 0){
       page_numb++;
