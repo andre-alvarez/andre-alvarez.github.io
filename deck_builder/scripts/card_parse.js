@@ -185,14 +185,16 @@ function drawData(data) {
     console.log(col + " ; " + row);
        
     if (i == card.length-1) {
-      noLoop();
+      console.log("done all cards")
+      //noLoop();
       pdf.save({
       filename: deckName,
         width: card_width * 3,
         height: card_height * 3
       });
-    } else if(i % 9 == 0){
+    } else if((i+1) % 0 == 0){
       page_numb++;
+      console.log("i = " + i)
       console.log("new page " + page_numb)
       pdf.nextPage();  
     }
