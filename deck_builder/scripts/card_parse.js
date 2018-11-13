@@ -187,13 +187,7 @@ function drawData(data) {
       noLoop();
       pdf.save({
       filename: deckName,
-        margin: {
-          top: '100px',
-          left: '100px',
-          right: '100px',
-          bottom: '100px'
-        },
-        width: card_width * 3
+        width: card_width * 3,
         height: card_height * 3
       });
     } else if(i % 9 == 0){
