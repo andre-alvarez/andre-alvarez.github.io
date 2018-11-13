@@ -205,9 +205,15 @@ function drawData(data) {
       console.log("done all cards")
       //noLoop();
       pdf.save({
-      filename: deckName,
-        width: card_width * 3,
-        height: card_height * 3
+        filename: deckName,
+        margin: {
+          top: '100px',
+          left: '100px',
+          right: '100px',
+          bottom: '100px'
+        },
+        width: card_width * 3 + 2*100,
+        height: card_height * 3 + 2*100
       });
     } else if((i+1) % 0 == 0){
       page_numb++;
