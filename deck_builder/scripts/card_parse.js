@@ -213,7 +213,7 @@ function drawData(data) {
           bottom: '0px'
         },
         width: card_width * 3 + 2*0,
-        height: card_height * 3 + 2*0
+        height: card_height * 3 - 10
       });
     } else if((i+1) % 0 == 0){
       page_numb++;
