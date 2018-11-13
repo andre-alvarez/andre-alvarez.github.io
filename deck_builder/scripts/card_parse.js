@@ -185,8 +185,20 @@ function drawData(data) {
     console.log(col + " ; " + row);
        
     if (i == card.length-1) {
-        noLoop();
-        pdf.save();
+      noLoop();
+      pdf.save({
+      filename: deckName,
+        margin: {
+          top: '100px',
+          left: '100px',
+          right: '100px',
+          bottom: '100px'
+        },
+        width: card_width * 3 + 100 * 2,
+        height: card_height * 3 + 100 * 2
+      }););
+    } else if(i % 9 == 0){
+      pdf.nextPage();  
     }
   }
   function colorHEX(cardColor) {
