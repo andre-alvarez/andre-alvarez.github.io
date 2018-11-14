@@ -71,6 +71,8 @@ function setup() {
   console.log(Math.ceil(arrayCards.length/3));
   createCanvas(card_width*3+1, card_height*(Math.ceil(arrayCards.length/3))+1,SVG);
   noStroke();
+  textSize(25);
+  text("Please have patience. Your deck is loading!",25,25);
   textSize(txt_size);
   loadJSON("AllCards-x.json", drawData);
   pdf = createPDF();
@@ -78,7 +80,6 @@ function setup() {
 }
 
 function drawData(data) {
-  text("Please have patience. Your deck is loading!",0,0);
   console.log(data);
   var card = arrayCards; //["Commit / Memory","Adorable Kitten","Assure / Assemble","Mountain","Lightning Strike","Adorable Kitten","Assure / Assemble","Mountain","Lightning Strike"]
   var pt_width = textWidth('00 / 00') + h_margin;
