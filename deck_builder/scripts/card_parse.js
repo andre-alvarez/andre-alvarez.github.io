@@ -71,8 +71,8 @@ function setup() {
   console.log(Math.ceil(arrayCards.length/3));
   createCanvas(card_width*3+1, card_height*(Math.ceil(arrayCards.length/3))+1,SVG);
   noStroke();
-  textSize(25);
-  text("Please have patience. Your deck is loading!",25,25);
+  //textSize(25);
+  //text("Please have patience. Your deck is loading!",25,25);
   textSize(txt_size);
   loadJSON("AllCards-x.json", drawData);
   pdf = createPDF();
@@ -91,7 +91,7 @@ function drawData(data) {
     console.log(card[i]);
     strokeWeight(1);
     stroke(51);
-    fill("white");
+    noFill();
     console.log(col*card_width + " ; " + row*card_height);
     rect(col*card_width, row*card_height, card_width, card_height);
     if (card[i].includes(" / ")) {
