@@ -20,6 +20,9 @@ var arrayCards = [];
 var tmpArrays = [];
 var pdf;
 var page_numb = 1;
+var table;
+var arrayCode;
+var arrayImg;
 
 console.log(window.location.search);
 var user_input_data = window.location.search; 
@@ -52,7 +55,19 @@ for (var j=0; j<deckList.length; j++){
   console.log(arrayCards.length);
 }
 
+function preload() {
+  table = loadTable("mtg_icon.csv", "csv", "header");
+}
+
 function setup() {
+  console.log("table " + table.getString(0, 0));
+  arrayCode = new Array(table.getRowCount());
+  arrayImg = new Array(table.getRowCount());
+  for (var r = 0; r < table.getRowCount(); r++){
+      arrayCode[r] = table.getString(r, 1);
+      arrayImg[r] = loadImage(table.getString(r, 2));
+  }
+  console.log(arrayCode);
   console.log(Math.ceil(arrayCards.length/3));
   createCanvas(card_width*3+1, card_height*(Math.ceil(arrayCards.length/3))+1,SVG);
   noStroke();
@@ -94,10 +109,12 @@ function drawData(data) {
         rotate(HALF_PI);
         textAlign(LEFT, CENTER);
         text(data[card_split[0]].name, row*card_height + v_margin, -col*card_width - card_width + h_margin + name_rect_height/2);
-        text(data[card_split[0]].manaCost, row*card_height + (card_height - v_margin)/2 - textWidth(data[card_split[0]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
+        iconSVG(data[card[i]].manaCost);
+        //text(data[card_split[0]].manaCost, row*card_height + (card_height - v_margin)/2 - textWidth(data[card_split[0]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
         text(data[card_split[0]].type, row*card_height + v_margin, -col*card_width - card_width - name_rect_height/2 + type_rect_y);
         text(data[card_split[1]].name, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width + h_margin + name_rect_height/2);
-        text(data[card_split[1]].manaCost, row*card_height + (card_height - v_margin) - textWidth(data[card_split[1]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
+        iconSVG(data[card[i]].manaCost);
+        //text(data[card_split[1]].manaCost, row*card_height + (card_height - v_margin) - textWidth(data[card_split[1]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
         text(data[card_split[1]].type, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width - name_rect_height/2 + type_rect_y);
         textAlign(LEFT, CENTER);
         text(data[card_split[0]].text, row*card_height + v_margin + h_margin,  -col*card_width - card_width - name_rect_height + text_y, card_height/2 - (v_margin + h_margin)*2);
@@ -115,14 +132,16 @@ function drawData(data) {
         fill("black");
         textAlign(LEFT, CENTER);
         text(data[card_split[0]].name, col*card_width + h_margin/2 + rect_rad, row*card_height + name_rect_y + name_rect_height/2);
-        text(data[card_split[0]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card_split[0]].manaCost), row*card_height + name_rect_y + name_rect_height/2); 
+        iconSVG(data[card[i]].manaCost);
+        //text(data[card_split[0]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card_split[0]].manaCost), row*card_height + name_rect_y + name_rect_height/2); 
         text(data[card_split[0]].type, col*card_width + h_margin/2 + rect_rad, row*card_height + type_rect_y/2 + type_rect_height/2); 
         textAlign(LEFT, CENTER);
         text(data[card_split[0]].text, col*card_width + h_margin*2, row*card_height + text_y - type_rect_y/2, card_width - h_margin*2 - rect_rad);
         rotate(HALF_PI);
         textAlign(LEFT, CENTER);
         text(data[card_split[1]].name, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width + h_margin + name_rect_height/2);
-        text(data[card_split[1]].manaCost, row*card_height + (card_height - v_margin) - textWidth(data[card_split[1]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
+        iconSVG(data[card[i]].manaCost);
+        //text(data[card_split[1]].manaCost, row*card_height + (card_height - v_margin) - textWidth(data[card_split[1]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
         text(data[card_split[1]].type, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width - name_rect_height/2 + type_rect_y);
         textAlign(LEFT, CENTER);
         text(data[card_split[1]].text, row*card_height + v_margin + h_margin  + (card_height - v_margin)/2,  -col*card_width - card_width - name_rect_height + text_y, card_height/2 - (v_margin + h_margin)*2);
@@ -144,7 +163,8 @@ function drawData(data) {
           fill("black");
           textAlign(LEFT, CENTER);
           text(data[card[i]].name, col*card_width + h_margin/2 + rect_rad, row*card_height + name_rect_y + name_rect_height/2); 
-          text(data[card[i]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card[i]].manaCost), row*card_height + name_rect_y + name_rect_height/2);
+          iconSVG(data[card[i]].manaCost);
+          //text(data[card[i]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card[i]].manaCost), row*card_height + name_rect_y + name_rect_height/2);
           text(data[card[i]].type, col*card_width + h_margin/2 + rect_rad, row*card_height + type_rect_y + type_rect_height/2); 
           textAlign(LEFT, CENTER);
           text(data[card[i]].text, col*card_width + h_margin*2, row*card_height + text_y, card_width - h_margin*2 - rect_rad); 
@@ -171,7 +191,8 @@ function drawData(data) {
           fill("black");
           textAlign(LEFT, CENTER);
           text(data[card[i]].name, col*card_width + h_margin/2 + rect_rad, row*card_height + name_rect_y + name_rect_height/2); 
-          text(data[card[i]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card[i]].manaCost), row*card_height + name_rect_y + name_rect_height/2);
+          iconSVG(data[card[i]].manaCost);
+          //text(data[card[i]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card[i]].manaCost), row*card_height + name_rect_y + name_rect_height/2);
           text(data[card[i]].type, col*card_width + h_margin/2 + rect_rad, row*card_height + type_rect_y + type_rect_height/2); 
           textAlign(LEFT, CENTER);
           text(data[card[i]].text.split("\n").join("\n\n"), col*card_width + h_margin*2, row*card_height + text_y, card_width - h_margin*2 - rect_rad); 
@@ -186,7 +207,8 @@ function drawData(data) {
           fill("black");
           textAlign(LEFT, CENTER);
           text(data[card[i]].name, col*card_width + h_margin/2 + rect_rad, row*card_height + name_rect_y + name_rect_height/2);
-          text(data[card[i]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card[i]].manaCost), row*card_height + name_rect_y + name_rect_height/2); 
+          iconSVG(data[card[i]].manaCost);
+          //text(data[card[i]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card[i]].manaCost), row*card_height + name_rect_y + name_rect_height/2); 
           text(data[card[i]].type, col*card_width + h_margin/2 + rect_rad, row*card_height + type_rect_y + type_rect_height/2); 
           textAlign(LEFT, CENTER);
           text(data[card[i]].text, col*card_width + h_margin*2, row*card_height + text_y, card_width - h_margin*2 - rect_rad);
@@ -251,5 +273,24 @@ function drawData(data) {
     var element = document.getElementById("tempId");
     element.parentNode.removeChild(element);
     return cardHEX;
+  }  function iconSVG(manaCost){
+    console.log(manaCost);
+    var arrayMana = manaCost.split("}{").join(";").replace("{","").replace("}","").split(";");
+    console.log(arrayMana);
+    var manaCnt = arrayMana.length;
+    console.log(manaCnt);
+    cnt = arrayMana.length
+    for (var m = 0; m < arrayMana.length; m++) {
+      console.log(arrayMana[m]);
+      for (var c = 0; c < arrayCode.length; c++){
+        if (arrayCode[c] === arrayMana[m]){
+          cnt = cnt - 1
+          console.log(cnt);
+          console.log(c);
+          console.log(arrayImg[c]);
+          image(arrayImg[c],col*card_width + card_width - h_margin - cnt*(txt_size+2) - txt_size, row*card_height + name_rect_y + (name_rect_height-txt_size)/2,txt_size,txt_size);
+        }
+      }
+    }
   }
 }
