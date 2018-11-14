@@ -109,11 +109,11 @@ function drawData(data) {
         rotate(HALF_PI);
         textAlign(LEFT, CENTER);
         text(data[card_split[0]].name, row*card_height + v_margin, -col*card_width - card_width + h_margin + name_rect_height/2);
-        iconSVG(data[card[i]].manaCost);
+        iconSVG(data[card_split[0]].manaCost);
         //text(data[card_split[0]].manaCost, row*card_height + (card_height - v_margin)/2 - textWidth(data[card_split[0]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
         text(data[card_split[0]].type, row*card_height + v_margin, -col*card_width - card_width - name_rect_height/2 + type_rect_y);
         text(data[card_split[1]].name, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width + h_margin + name_rect_height/2);
-        iconSVG(data[card[i]].manaCost);
+        iconSVG(data[card_split[1]].manaCost);
         //text(data[card_split[1]].manaCost, row*card_height + (card_height - v_margin) - textWidth(data[card_split[1]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
         text(data[card_split[1]].type, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width - name_rect_height/2 + type_rect_y);
         textAlign(LEFT, CENTER);
@@ -132,7 +132,7 @@ function drawData(data) {
         fill("black");
         textAlign(LEFT, CENTER);
         text(data[card_split[0]].name, col*card_width + h_margin/2 + rect_rad, row*card_height + name_rect_y + name_rect_height/2);
-        iconSVG(data[card[i]].manaCost);
+        iconSVG(data[card_split[0]].manaCost);
         //text(data[card_split[0]].manaCost, col*card_width + card_width - h_margin - textWidth(data[card_split[0]].manaCost), row*card_height + name_rect_y + name_rect_height/2); 
         text(data[card_split[0]].type, col*card_width + h_margin/2 + rect_rad, row*card_height + type_rect_y/2 + type_rect_height/2); 
         textAlign(LEFT, CENTER);
@@ -140,7 +140,7 @@ function drawData(data) {
         rotate(HALF_PI);
         textAlign(LEFT, CENTER);
         text(data[card_split[1]].name, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width + h_margin + name_rect_height/2);
-        iconSVG(data[card[i]].manaCost);
+        iconSVG(data[card_split[1]].manaCost);
         //text(data[card_split[1]].manaCost, row*card_height + (card_height - v_margin) - textWidth(data[card_split[1]].manaCost), -col*card_width - card_width + h_margin + name_rect_height/2); 
         text(data[card_split[1]].type, row*card_height + v_margin + (card_height - v_margin)/2, -col*card_width - card_width - name_rect_height/2 + type_rect_y);
         textAlign(LEFT, CENTER);
