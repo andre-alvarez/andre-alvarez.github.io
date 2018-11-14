@@ -174,6 +174,7 @@ function drawData(data) {
           text(data[card[i]].power + " / " + data[card[i]].toughness, col*card_width + pt_x , row*card_height + pt_y);
         } else if (data[card[i]].types.includes("Land")) {
           console.log("land");
+          fill("white");
           rect(col*card_width + h_margin/2, row*card_height + name_rect_y, card_width - h_margin, name_rect_height, rect_rad);
           rect(col*card_width + h_margin/2, row*card_height + type_rect_y, card_width - h_margin, type_rect_height, rect_rad);
           strokeWeight(0);
