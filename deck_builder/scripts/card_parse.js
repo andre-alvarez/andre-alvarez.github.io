@@ -226,17 +226,18 @@ function drawData(data) {
     if (i == card.length-1) {
       console.log("done all cards")
       //noLoop();
-      pdf.save({
-        filename: deckName,
-        margin: {
-          top: '0px',
-          left: '0px',
-          right: '0px',
-          bottom: '0px'
-        },
-        width: card_width * 3 + 2*0,
-        height: card_height * 3 - 2
-      });
+      pdf.endRecord();
+      //pdf.save({
+      //  filename: deckName,
+      //  margin: {
+      //    top: '0px',
+      //    left: '0px',
+      //    right: '0px',
+      //    bottom: '0px'
+      //  },
+      //  width: card_width * 3 + 2*0,
+      //  height: card_height * 3 - 2
+      //});
     } else if((i+1) % 0 == 0){
       page_numb++;
       console.log("i = " + i)
@@ -293,4 +294,19 @@ function drawData(data) {
       }
     }
   }
+  
+  function printDeck(){
+    pdf.save({
+      filename: deckName,
+      margin: {
+        top: '0px',
+        left: '0px',
+        right: '0px',
+        bottom: '0px'
+      },
+      width: card_width * 3 + 2*0,
+      height: card_height * 3 - 2
+    });
+  }
+  
 }
