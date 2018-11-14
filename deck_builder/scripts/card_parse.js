@@ -172,7 +172,7 @@ function drawData(data) {
           text(data[card[i]].text, col*card_width + h_margin*2, row*card_height + text_y, card_width - h_margin*2 - rect_rad); 
           textAlign(CENTER, TOP);
           text(data[card[i]].power + " / " + data[card[i]].toughness, col*card_width + pt_x , row*card_height + pt_y);
-        } else if (data[card[i]].types == "Land") {
+        } else if (data[card[i]].types.includes("Land")) {
           console.log("land");
           rect(col*card_width + h_margin/2, row*card_height + name_rect_y, card_width - h_margin, name_rect_height, rect_rad);
           rect(col*card_width + h_margin/2, row*card_height + type_rect_y, card_width - h_margin, type_rect_height, rect_rad);
@@ -200,7 +200,7 @@ function drawData(data) {
           text(data[card[i]].text.split("\n").join("\n\n"), col*card_width + h_margin*2, row*card_height + text_y, card_width - h_margin*2 - rect_rad); 
           textAlign(CENTER, TOP);
           text(data[card[i]].loyalty, col*card_width + pt_x , row*card_height + pt_y);
-        } else if (data[card[i]].includes("Enchantment")) {
+        } else if (data[card[i]].types.includes("Enchantment")) {
           fill(colorHEX(data[card[i]].colors[0]));
           rect(col*card_width + h_margin/2, row*card_height + name_rect_y, card_width - h_margin, name_rect_height, rect_rad);
           rect(col*card_width + h_margin/2, row*card_height + type_rect_y, card_width - h_margin, type_rect_height, rect_rad);
@@ -214,7 +214,7 @@ function drawData(data) {
           text(data[card[i]].type, col*card_width + h_margin/2 + rect_rad, row*card_height + type_rect_y + type_rect_height/2); 
           textAlign(LEFT, CENTER);
           text(data[card[i]].text, col*card_width + h_margin*2, row*card_height + text_y, card_width - h_margin*2 - rect_rad);
-        }else if (data[card[i]].includes("Artifact")) {
+        }else if (data[card[i]].types.includes("Artifact")) {
           fill(colorHEX("Gray"));
           rect(col*card_width + h_margin/2, row*card_height + name_rect_y, card_width - h_margin, name_rect_height, rect_rad);
           rect(col*card_width + h_margin/2, row*card_height + type_rect_y, card_width - h_margin, type_rect_height, rect_rad);
