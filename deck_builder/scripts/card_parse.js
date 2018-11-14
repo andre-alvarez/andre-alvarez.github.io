@@ -78,6 +78,7 @@ function setup() {
 }
 
 function drawData(data) {
+  text("Please have patience. Your deck is loading!,0,0);
   console.log(data);
   var card = arrayCards; //["Commit / Memory","Adorable Kitten","Assure / Assemble","Mountain","Lightning Strike","Adorable Kitten","Assure / Assemble","Mountain","Lightning Strike"]
   var pt_width = textWidth('00 / 00') + h_margin;
