@@ -293,9 +293,10 @@ function drawData(data) {
         }
       }
     }
-  }
+  }  
+}
   
-  function printDeck(){
+function printDeck(){
     pdf.save({
       filename: deckName,
       margin: {
@@ -308,5 +309,3 @@ function drawData(data) {
       height: card_height * 3 - 2
     });
   }
-  
-}
