@@ -13,13 +13,14 @@
 <body>
 <h1>Deck Builder</h1>
   <p>Please use Chrome or Firefox. IE not supported and Safare not tested</p>
-  <form class="deck-form" action="deck_list.html" method="get">
+  <form class="deck-form" method="get">
     <input id="deck-name" name="deck-name"  type="text" placeholder="Deck Name" size="50">
     <br>
     <br>
     <textarea id="deck-list" name="deck-list" rows="20" cols="50" placeholder="Add Cards. One per line and quantity first (# CARD_NAME)"></textarea>
     <br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit html" formaction="/html_deck_list.html">
+    <input type="submit" value="Submit p5js SVG" formaction="/p5js_svg_deck_list.html">
   </form>
 </body>
 </html>
