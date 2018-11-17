@@ -344,15 +344,15 @@ function modifyCss(layout, col, row, colors, cardWidth, cardHeight) {
   console.log("colors", colors);
   if (Array.isArray(colors) && colors.length === 2) {
     this.find(".name-bar, .type-bar").css({"background-color": colorHEX(colors[0]),
-      "background-image": "linear-gradient(to right," + colorHEX(colors[0]) + " 0%," + colorHEX(colors[1]) + " 100%)" });
+      "background-image": "linear-gradient(to right," + colorHEX(colors[0]) + " 0%," + colorHEX(colors[1]) + " 100%)" "-webkit-print-color-adjust": "exact"  });
   } else if (Array.isArray(colors) && colors.length > 2) {
-    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("#FFDF00") });
+    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("#FFDF00") "-webkit-print-color-adjust": "exact"  });
   } else if (colors == null) {
-    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("Gray") });
+    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("Gray") "-webkit-print-color-adjust": "exact"  });
   } else {
     console.log("else:", colors);
     console.log("hex color: " + colorHEX(colors[0]));
-    this.find(".name-bar, .type-bar").css({"background-color": colorHEX(colors[0]) });
+    this.find(".name-bar, .type-bar").css({"background-color": colorHEX(colors[0]) "-webkit-print-color-adjust": "exact"  });
   }
 }
 
