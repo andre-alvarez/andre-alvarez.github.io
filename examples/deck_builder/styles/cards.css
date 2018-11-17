@@ -1,0 +1,134 @@
+:root {
+    --main-width: 250px; 
+    --main-height: 350px; 
+    --split-width: 175px;
+    --aftermath-height: 125px;
+    --main-font-size: 15px; 
+    --main-padding: 5px;  
+    --main-margin: 10px;  
+    --main-radius: 10px;
+}
+.*{
+ -webkit-print-color-adjust: exact; 
+}
+.card {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position: absolute;
+  background: #fff;
+  display: block;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  margin: 0px;
+  width: var(--main-width);
+  height: var(--main-height);
+  padding: var(--main-padding);
+}
+.card-split {
+  transform: rotate(90deg);
+  transform-origin: left top;   
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position: absolute;
+  background: #fff;
+  display: block;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  margin: 0px;
+  width: var(--split-width);
+  height: var(--main-width);
+  padding: var(--main-padding);
+}
+.card-aftermath {   
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position: absolute;
+  background: #fff;
+  display: block;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  margin: 0px;
+  width: var(--main-width);
+  height: var(--split-width);
+  padding: var(--main-padding);
+}
+.name-bar,
+.type-bar {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: block;
+  border: 1px solid rgb(0, 0, 0);
+  -webkit-border-radius: var(--main-radius);
+  border-radius: var(--main-radius);
+  width: auto;
+  height: 30px;
+}
+.name,
+.type {
+  font-size: var(--main-font-size);
+  overflow: hidden;
+  padding: var(--main-padding);
+  color: #000;
+  float: left;
+  margin: 0;
+}
+.art-space {
+  background: #fff;
+  display: block;
+  border-left: 1px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+  margin: 0px var(--main-margin);
+  width: auto;
+  height: 100px;
+}
+.text-space {
+  background: #fff;
+  display: block;
+  border-left: 1px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0, 0, 0);
+  border-bottom: 1px solid rgb(0, 0, 0);
+  -webkit-border-radius: 0px 0px  var(--main-radius)  var(--main-radius);;
+  border-radius: 0px 0px var(--main-radius)  var(--main-radius);;
+  margin: 0px var(--main-margin);
+  width: auto;
+  height: 100px;
+}
+.text {
+  font-size: var(--main-font-size);
+  padding: var(--main-padding);
+  margin: 0;
+}
+
+.pt-loyalty-box {
+  background-color: #fff;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  display: block;
+  border: 1px solid rgb(0, 0, 0);
+  -webkit-border-radius: var(--main-radius);
+  border-radius: var(--main-radius);
+  width: 60px;
+  height: 30px;
+}
+.pt-loyalty {
+  font-size: var(--main-font-size);
+  padding: 7px;
+  margin: 0 auto;
+  width: 70%;
+}
+.mana-cost {
+  padding: var(--main-padding);
+}
+.mana-cost p {
+  width: 20px;
+  height: 20px;
+  float: right;
+}
+.mana-icon {
+  margin: 0px 0 0px 2px;
+  display: inline-block;
+  text-indent: -999em;
+  background-repeat: no-repeat;
+  width: 16px;
+}
+.pagebreak { page-break-before: always; }
