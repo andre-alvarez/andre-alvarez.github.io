@@ -64,7 +64,10 @@ function loadDeck() {
 }
 
 function readDataBase() {
-  $.getJSON("\AllCards-x.json",getData); //"/cards.json", getData);
+  $.getJSON(
+    "https://andre-alvarez.github.io/examples/deck_builder/AllCards-x.json",
+    getData
+  ); //"/cards.json", getData);
   function getData(data) {
     var col = 0;
     var row = 0;
