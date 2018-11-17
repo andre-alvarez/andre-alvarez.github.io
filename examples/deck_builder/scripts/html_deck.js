@@ -6,6 +6,9 @@ var mainCardHeight = mainCardWidth * 1.4; //px
 var cardPadding = 5;
 var innerMargin = 10;
 var splitCardWidth = mainCardHeight / 2;
+var page = 1;
+var idParent = "#cards";
+var cardsCount = 1;
 
 var landColor = [
   ["Forest", "Green", "{G}"],
@@ -21,6 +24,8 @@ document.documentElement.style.setProperty("--main-font-size", txtSize + "px");
 document.documentElement.style.setProperty("--main-padding", cardPadding + "px");
 document.documentElement.style.setProperty("--main-margin", innerMargin + "px");
 document.documentElement.style.setProperty("--split-width",splitCardWidth + "px");
+idParent = "#page_" + page;
+$("#cards").append("<div id=" + "page_" + page + "></div>");
 loadDeck();
 readDataBase();
 
@@ -106,6 +111,7 @@ function readDataBase() {
             type = data[doubleCard].type;
             console.log(col + " ; " + row);
             if(d > 0){
+              cardsCount++
               if (col == 2) {
                 col = 0;
                 row++;
@@ -115,6 +121,9 @@ function readDataBase() {
             }
             console.log(col + " ; " + row);
             nonSplitCards(layout, colors, name, manaCost, type, text, pt, loyalty, col, row);
+            if(d == 0){
+              newPage(cardsCount);
+            }
           }
         } else {
           colors = data[card].colors;
@@ -135,15 +144,9 @@ function readDataBase() {
         row++;
       }
       console.log(col + " ; " + row);
-
-      if (i == arrayCards.length - 1) {
-        console.log("done all cards");
-        $("#cards").append("<div class='pagebreak'></div>");
-      } else if ((i + 1) % 9 == 0) {
-        console.log("new page");
-        //page break;
-        $("#cards").append("<div class='pagebreak'></div>");
-      }
+      console.log("newPage function")
+      newPage(cardsCount);
+      cardsCount++
       console.log(col, row);
     }
   }
@@ -181,7 +184,7 @@ function createSplitCard(layout, colors, name, manaCost, type, text, col, row) {
   if (layout[0].includes("aftermath")){
     layout[1] = "split";
   }
-  $("#cards").append(cardDiv);
+  $(idParent).append(cardDiv);
   for (j = 0; j < name.length; j++) {
     var cardSplitId = cardId + "_" + j;
     var cardSplitDiv = createCard(layout[j], name[j], manaCost[j], type[j],text[j], cardSplitId);
@@ -199,7 +202,7 @@ function createCreaturePlaneswalkerCard( layout, colors, name, manaCost, type, t
     .append("<span>" + pt_loyalty + "</span>");
   console.log("layout", layout);
   var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
-  $("#cards").append(cardDiv.append(pt_loyaltyBoxDiv.append(pt_loyaltyDiv)));
+  $(idParent).append(cardDiv.append(pt_loyaltyBoxDiv.append(pt_loyaltyDiv)));
   console.log("this: " + this);
   modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
 }
@@ -224,7 +227,7 @@ function createLandCard(layout, colors, name, manaCost, type, text, col, row) {
     console.log("colors", colors);
   }
   var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
-  $("#cards").append(cardDiv);
+  $(idParent).append(cardDiv);
   modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
 }
 
@@ -232,7 +235,7 @@ function createNonPermanentCard(layout, colors, name, manaCost, type, text, col,
   var cardId = "card_" + col + "_" + row;
   var div = "<div></div>";
   var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
-  $("#cards").append(cardDiv);
+  $(idParent).append(cardDiv);
   modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
 }
 
@@ -344,15 +347,15 @@ function modifyCss(layout, col, row, colors, cardWidth, cardHeight) {
   console.log("colors", colors);
   if (Array.isArray(colors) && colors.length === 2) {
     this.find(".name-bar, .type-bar").css({"background-color": colorHEX(colors[0]),
-      "background-image": "linear-gradient(to right," + colorHEX(colors[0]) + " 0%," + colorHEX(colors[1]) + " 100%)" "-webkit-print-color-adjust": "exact"  });
+      "background-image": "linear-gradient(to right," + colorHEX(colors[0]) + " 0%," + colorHEX(colors[1]) + " 100%)", "-webkit-print-color-adjust": "exact" });
   } else if (Array.isArray(colors) && colors.length > 2) {
-    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("#FFDF00") "-webkit-print-color-adjust": "exact"  });
+    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("#FFDF00"), "-webkit-print-color-adjust": "exact" });
   } else if (colors == null) {
-    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("Gray") "-webkit-print-color-adjust": "exact"  });
+    this.find(".name-bar, .type-bar").css({"background-color": colorHEX("Gray"), "-webkit-print-color-adjust": "exact" });
   } else {
     console.log("else:", colors);
     console.log("hex color: " + colorHEX(colors[0]));
-    this.find(".name-bar, .type-bar").css({"background-color": colorHEX(colors[0]) "-webkit-print-color-adjust": "exact"  });
+    this.find(".name-bar, .type-bar").css({"background-color": colorHEX(colors[0]), "-webkit-print-color-adjust": "exact" });
   }
 }
 
@@ -414,4 +417,15 @@ function colorHEX(cardColor) {
   var element = document.getElementById("tempId");
   element.parentNode.removeChild(element);
   return cardHEX;
+}
+
+function newPage(cardsCount){
+  console.log("cardsCount",cardsCount);
+  if ((cardsCount) % 9 == 0) {
+    console.log("new page");
+    //page break;
+    page++;
+    idParent = "#page_" + page;
+    $("#cards").append("<div id=" + "page_" + page + "></div>");
+  }
 }
