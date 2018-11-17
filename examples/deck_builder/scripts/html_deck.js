@@ -25,7 +25,7 @@ document.documentElement.style.setProperty("--main-padding", cardPadding + "px")
 document.documentElement.style.setProperty("--main-margin", innerMargin + "px");
 document.documentElement.style.setProperty("--split-width",splitCardWidth + "px");
 idParent = "#page_" + page;
-$("#cards").append("<div id=" + "page_" + page + "></div>");
+$("#cards").append("<div class='pagebreak' id='" + "page_" + page + "'></div>");
 loadDeck();
 readDataBase();
 
@@ -323,13 +323,14 @@ function createCard(layout, name, manaCost, type, text, cardId) {
 
 function modifyCss(layout, col, row, colors, cardWidth, cardHeight) {
   console.log("layout", layout);
+  if(col == 0){var multipler = 0;}else{var multipler = -1;}
   if (layout.includes("split")) {
     console.log(j, cardWidth);
     console.log(this.parent());
     this.css({"transform": "rotate(90deg) translate(" + (j * cardWidth - (cardPadding + 1)) + "px, -" + (cardHeight - (cardPadding + 1)) + "px)"
     });
-    this.parent().css({"margin-left": col * mainCardWidth + "px","margin-top": row * mainCardHeight + "px"
-    });
+    //For .card as absolute this.parent().css({"margin-left": col * mainCardWidth + "px","margin-top": row * mainCardHeight + "px"});
+    this.parent().css({"margin-left": col * mainCardWidth + "px","margin-top": multipler * mainCardHeight + "px" });
     this.find(".art-space").height($(".art-space").height() / 2);
     cardHeight = cardHeight - (cardPadding + 1);
   } else if (layout.includes("aftermath")) {
@@ -338,7 +339,8 @@ function modifyCss(layout, col, row, colors, cardWidth, cardHeight) {
     this.find(".art-space").height($(".art-space").height() / 2);
     cardHeight = mainCardHeight / 2 - (cardPadding + 1);
   } else {
-    this.css({ "margin-left": col * cardWidth + "px", "margin-top": row * cardHeight + "px" });
+    //For .card as absolute this.css({ "margin-left": col * cardWidth + "px", "margin-top": row * cardHeight + "px" });
+    this.css({ "margin-left": col * cardWidth + "px", "margin-top": multipler * cardHeight + "px" });
   }
   var txtSpaceHeight = cardHeight - $(".name-bar").height() - this.find(".art-space").height() -  $(".type-bar").height() - 2 * cardPadding - innerMargin;
   console.log("txtSpaceHeight", txtSpaceHeight);
@@ -426,6 +428,6 @@ function newPage(cardsCount){
     //page break;
     page++;
     idParent = "#page_" + page;
-    $("#cards").append("<div id=" + "page_" + page + "></div>");
+    $("#cards").append("<div class='pagebreak' id='" + "page_" + page + "'></div>");
   }
 }
