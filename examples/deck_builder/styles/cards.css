@@ -7,6 +7,7 @@
     --main-padding: 5px;  
     --main-margin: 10px;  
     --main-radius: 10px;
+    --img-display: none;
 }
 .card {
   box-sizing: border-box;
@@ -143,7 +144,7 @@
   -webkit-region-break-inside: avoid; 
 }
 .card-img{
-  display: none;
+  display: var(--img-display);
 }
 .card-img>img{
   width: var(--main-width);
