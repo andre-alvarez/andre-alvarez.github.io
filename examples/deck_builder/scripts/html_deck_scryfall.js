@@ -470,6 +470,7 @@ function newPage(cardsCount){
     $("#cards").append("<div class='pagebreak' id='" + "page_" + page + "'></div>");
   }
 }
+
 function removeDuplicate(arr){
   let unique_array = arr.filter(function(elem, index, self) {
       return index == self.indexOf(elem);
@@ -477,3 +478,11 @@ function removeDuplicate(arr){
   return unique_array
 }
 
+function showImgs(){
+  var checkBox = document.getElementById("img-cb");
+  if (checkBox.checked == true){
+    document.documentElement.style.setProperty("--img-display", "block");
+  } else {
+    document.documentElement.style.setProperty("--img-display", "none");
+  }
+}
