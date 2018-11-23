@@ -4,23 +4,42 @@
     <meta charset="UTF-8">
     <title>Deck Builder</title>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <!--script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script-->
-  <script src="scripts\p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+  <!--script src="scripts\p5.js"></--script>
   <script src="scripts\p5.svg.js"></script>
-  <script src="scripts\p5.pdf.js"></script>
+  <script-- src="scripts\p5.pdf.js"></script-->
   <script src="scripts\index.js"></script>
 </head>
 <body>
 <h1>Deck Builder</h1>
-  <p>Please use Chrome or Firefox. IE not supported and Safare not tested</p>
   <form class="deck-form" method="get">
     <input id="deck-name" name="deck-name"  type="text" placeholder="Deck Name" size="50">
     <br>
     <br>
-    <textarea id="deck-list" name="deck-list" rows="20" cols="50" placeholder="Add Cards. One per line and quantity first (# CARD_NAME)"></textarea>
+    <textarea id="deck-list" name="main-board" rows="20" cols="50" placeholder="MAINBORAD:
+Add Cards. One per line and quantity first (# CARD_NAME)">1 Adorable Kitten
+1 Commit // Memory
+1 Assure // Assemble
+1 Chamber Sentry
+1 Conflux
+1 Assassin's Trophy
+1 Vraska, Golgari Queen
+1 Mountain
+1 Golden Guardian</textarea>
+    <textarea id="deck-list" name="side-board" rows="20" cols="50" placeholder="SIDEBORAD:
+Add Cards. One per line and quantity first (# CARD_NAME)">1 Adorable Kitten
+1 Commit // Memory
+1 Assure // Assemble
+1 Chamber Sentry
+1 Conflux
+1 Assassin's Trophy
+1 Vraska, Golgari Queen
+1 Mountain
+1 Golden Guardian</textarea>
     <br>
-    <input type="submit" value="Submit" formaction="/examples/deck_builder/html_deck_list.html">
-    <input type="submit" value="Submit (with images)" formaction="/examples/deck_builder/html_deck_list_scryfall.html">
+    <br>
+    <input type="submit" value="Submit" formaction="/Users/andrealvarez/MTG/Deck_Builder/html_deck_list_scryfall.html">
+    <input type="submit" value="Go Elsewhere" formaction="/p5js_svg_deck_list.html">
   </form>
 </body>
 </html>
