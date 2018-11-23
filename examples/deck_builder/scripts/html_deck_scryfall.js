@@ -179,28 +179,34 @@ function readDataBase() {
 }
 function nonSplitCards(layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img) {
   var cardId = "card_" + col + "_" + row;
-  cardTypes.call($(this), cardId, layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img);
+  console.log("Land card");
+  if (type.includes("Basic")) {
+    console.log("Basic Land");
+    console.log(name);
+    colors = [name];
+    console.log(colors);
+  }
+  cardTypes.call($(this), cardId, layout, name, manaCost, type, text, pt, loyalty, col, row, img);
   modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
 }
-function cardTypes(cardId, layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img){
+function cardTypes(cardId, layout, name, manaCost, type, text, pt, loyalty, col, row, img){
   if (type.includes("Creature")) {
     console.log("Creature card");
-    createCreaturePlaneswalkerCard.call($(this), cardId, layout, colors, name, manaCost, type, text, pt, col, row, img);
+    createCreaturePlaneswalkerCard.call($(this), cardId, layout, name, manaCost, type, text, pt, col, row, img);
   } else if (type.includes("Land")) {
-    console.log("Land card");
-    createLandCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
+    createLandCard.call($(this), cardId, layout, name, manaCost, type, text, col, row, img);
   } else if (type.includes("Planeswalker")) {
     console.log("Planeswalker card");
-    createCreaturePlaneswalkerCard.call($(this), cardId, layout, colors, name, manaCost, type, text, loyalty, col, row, img);
+    createCreaturePlaneswalkerCard.call($(this), cardId, layout, name, manaCost, type, text, loyalty, col, row, img);
   } else if (type.includes("Enchantment")) {
     console.log("Enchantment card");
-    createNonPermanentCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
+    createNonPermanentCard.call($(this), cardId, layout, name, manaCost, type, text, col, row, img);
   } else if (type.includes("Artifact")) {
     console.log("Artifact card");
-    createNonPermanentCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
+    createNonPermanentCard.call($(this), cardId, layout, name, manaCost, type, text, col, row, img);
   } else {
     console.log("Everything else");
-    createNonPermanentCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
+    createNonPermanentCard.call($(this), cardId, layout, name, manaCost, type, text, col, row, img);
   }
 }
 
@@ -234,60 +240,41 @@ function createFlipCard(layout, colors, name, manaCost, type, text, pt, col, row
   $(idParent).append(cardDiv);
   for (j = 0; j < name.length; j++) {
     var cardFlipId = cardId + "_" + j;
-    var cardFlipDiv = cardTypes.call($("#" + cardId), cardFlipId, layout[j], colors, name[j], manaCost[j], type[j], text[j], pt[j], "", col, row);
+    var cardFlipDiv = cardTypes.call($("#" + cardId), cardFlipId, layout[j], name[j], manaCost[j], type[j], text[j], pt[j], "", col, row);
     $("#" + cardId).append(cardFlipDiv);
-    console.log("modifyCss flip",cardFlipId, layout[j], col, row, colors, splitCardWidth,  mainCardWidth)
     modifyCss.call( $("#" + cardFlipId), layout[j], col, row, colors, mainCardWidth,  mainCardHeight );
     console.log("modifyCss flip - done")
   }
   $("#" + cardId).append(imgDiv);
 }
 
-function createCreaturePlaneswalkerCard(cardId, layout, colors, name, manaCost, type, text, pt_loyalty, col, row, img) {
+function createCreaturePlaneswalkerCard(cardId, layout, name, manaCost, type, text, pt_loyalty, col, row, img) {
   var div = "<div></div>";
   var pt_loyaltyBoxDiv = $(div).addClass("pt-loyalty-box");
   var pt_loyaltyDiv = $(div).addClass("pt-loyalty").append("<span>" + pt_loyalty + "</span>");
   console.log("layout", layout);
   var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
   $(this).append(cardDiv.append(pt_loyaltyBoxDiv.append(pt_loyaltyDiv)));
-  console.log("this: " + this);
-    console.log("modifyCss Creature",cardId, layout)
-  //modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
   if (img != null){
     var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
     $("#" + cardId).append(imgDiv);
   }
 }
 
-function createLandCard(cardId, layout, colors, name, manaCost, type, text, col, row, img) {
-  var div = "<div></div>";
-  if (type.includes("Basic")) {
-    console.log("Basic Land");
-    console.log(name);
-    for (i = 0; i < landColor.length; i++) {
-      console.log(landColor[i][0]);
-      if (landColor[i][0] === name) {
-        colors = [landColor[i][2]];
-        //manaCost = landColor[i][2];
-        //text = "Tap to add " + landColor[i][2] + " to your mana pool.";
-        console.log(colors, manaCost, text);
-      }
-    }
-  } else {
-    colors = ["#FFDF00"];
-    console.log("colors", colors);
-  }
-  var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
-  var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
-  $(this).append(cardDiv.append(imgDiv));
-  //modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
-}
-
-function createNonPermanentCard(cardId, layout, colors, name, manaCost, type, text, col, row, img){
+function createLandCard(cardId, layout, name, manaCost, type, text, col, row, img) {
   var div = "<div></div>";
   var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
   $(this).append(cardDiv);
-  //modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
+  if (img != null){
+    var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
+    $("#" + cardId).append(imgDiv);
+  }
+}
+
+function createNonPermanentCard(cardId, layout, name, manaCost, type, text, col, row, img){
+  var div = "<div></div>";
+  var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
+  $(this).append(cardDiv);
   if (img != null){
     var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
     $("#" + cardId).append(imgDiv);
@@ -438,7 +425,6 @@ function modifyCss(layout, col, row, colors, cardWidth, cardHeight) {
     this.find(".name-bar, .type-bar").css({"background-color": colorHEX("Gray"), "-webkit-print-color-adjust": "exact" });
   } else {
     console.log("else:", colors);
-    console.log("hex color: " + colorHEX(colors[0]));
     this.find(".name-bar, .type-bar").css({"background-color": colorHEX(colors[0]), "-webkit-print-color-adjust": "exact" });
   }
 }
@@ -475,15 +461,11 @@ function replaceManaInText(searchStr, str) {
 
 function colorHEX(colorId) {
   console.log(colorId,colorId.length);
-  if (colorId.length === 1){
-    for (var m = 0; m < landColor.length; m++) {
-      console.log(landColor[m][0]);
-      if (landColor[m][2] === colorId) {
-        var cardColor = landColor[m][1];
-      }
+  for (var m = 0; m < landColor.length; m++) {
+    console.log(landColor[m][0]);
+    if ((colorId.length === 1 && landColor[m][2] === colorId) || (colorId.length > 1 && landColor[m][0] === colorId)){
+      var cardColor = landColor[m][1];
     }
-  }else{
-    var cardColor = colorId;
   }
   console.log(cardColor);
   if (cardColor === "White") {
