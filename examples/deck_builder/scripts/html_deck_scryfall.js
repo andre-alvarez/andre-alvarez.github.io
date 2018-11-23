@@ -99,9 +99,9 @@ function readDataBase() {
         var card = data.findIndex(p => p.name.includes(cardName));
         layout = data[card].layout;
         if (layout === "split") {
-          console.log(splitCardSeparator);
+          //console.log(splitCardSeparator);
           console.log("splited card");
-          var splitCard = arrayCards[i].split(splitCardSeparator);
+          //var splitCard = arrayCards[i].split(splitCardSeparator);
           //colors = data[card].card_faces[0].colors, data[splitCard[1]].colors];
           name = [data[card].card_faces[0].name, data[card].card_faces[1].name];
           manaCost = [data[card].card_faces[0].mana_cost, data[card].card_faces[1].mana_cost];
@@ -110,6 +110,16 @@ function readDataBase() {
           layout = [data[card].layout, data[card].layout];
           img = data[card].image_uris.large;
           createSplitCard(layout, name, manaCost, type, text, col, row, img);
+        } else if (layout === "flip"){
+          colors = data[card].colors;
+          name = [data[card].card_faces[0].name, data[card].card_faces[1].name];
+          manaCost = [data[card].card_faces[0].mana_cost, data[card].card_faces[1].mana_cost];
+          type = [data[card].card_faces[0].type_line, data[card].card_faces[1].type_line];
+          text = [data[card].card_faces[0].oracle_text, data[card].card_faces[1].oracle_text];
+          pt = [data[card].card_faces[0].power + " / " + data[card].card_faces[0].toughness, data[card].card_faces[1].power + " / " + data[card].card_faces[1].toughness];
+          layout = ["flip-up", "flip-down"];
+          img = data[card].image_uris.large;
+          createFlipCard(layout, colors, name, manaCost, type, text, pt, col, row, img)
         } else if (layout === "transform") {
           console.log("transform");
           var names = [data[card].card_faces[0].name, data[card].card_faces[1].name];
@@ -135,7 +145,7 @@ function readDataBase() {
               }
             }
             console.log(col + " ; " + row);
-            nonSplitCards(layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img);
+            nonSplitCards.call($(idParent), layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img);
             if(d == 0){
               newPage(cardsCount);
             }
@@ -150,7 +160,7 @@ function readDataBase() {
           layout = data[card].layout;
           type = data[card].type_line;
           img = data[card].image_uris.large;
-          nonSplitCards(layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img);
+          nonSplitCards.call($(idParent),layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img);
         }
       }
       col++;
@@ -168,35 +178,37 @@ function readDataBase() {
   }
 }
 function nonSplitCards(layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img) {
+  var cardId = "card_" + col + "_" + row;
+  cardTypes.call($(this), cardId, layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img);
+  modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
+}
+function cardTypes(cardId, layout, colors, name, manaCost, type, text, pt, loyalty, col, row, img){
   if (type.includes("Creature")) {
     console.log("Creature card");
-    createCreaturePlaneswalkerCard(layout, colors, name, manaCost, type, text, pt, col, row, img);
+    createCreaturePlaneswalkerCard.call($(this), cardId, layout, colors, name, manaCost, type, text, pt, col, row, img);
   } else if (type.includes("Land")) {
     console.log("Land card");
-    createLandCard(layout, colors, name, manaCost, type, text, col, row, img);
+    createLandCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
   } else if (type.includes("Planeswalker")) {
     console.log("Planeswalker card");
-    createCreaturePlaneswalkerCard(layout, colors, name, manaCost, type, text, loyalty, col, row, img);
+    createCreaturePlaneswalkerCard.call($(this), cardId, layout, colors, name, manaCost, type, text, loyalty, col, row, img);
   } else if (type.includes("Enchantment")) {
     console.log("Enchantment card");
-    createNonPermanentCard(layout, colors, name, manaCost, type, text, col, row, img);
+    createNonPermanentCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
   } else if (type.includes("Artifact")) {
     console.log("Artifact card");
-    createNonPermanentCard(layout, colors, name, manaCost, type, text, col, row, img);
+    createNonPermanentCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
   } else {
     console.log("Everything else");
-    createNonPermanentCard(layout, colors, name, manaCost, type, text, col, row, img);
+    createNonPermanentCard.call($(this), cardId, layout, colors, name, manaCost, type, text, col, row, img);
   }
 }
 
 function createSplitCard(layout, name, manaCost, type, text, col, row, img) {
-  console.log("arguments", arguments);
   console.log("name length", name.length);
   var cardId = "card_" + col + "_" + row;
   var div = "<div></div>";
-  var cardDiv = $(div)
-    .addClass("card")
-    .attr("id", cardId);
+  var cardDiv = $(div).addClass("card").attr("id", cardId);
   if (text[1].includes("Aftermath")){
     layout[0] = "aftermath";
   }
@@ -214,23 +226,40 @@ function createSplitCard(layout, name, manaCost, type, text, col, row, img) {
   $("#" + cardId).append(imgDiv);
 }
 
-function createCreaturePlaneswalkerCard( layout, colors, name, manaCost, type, text, pt_loyalty, col, row, img) {
+function createFlipCard(layout, colors, name, manaCost, type, text, pt, col, row, img) {
   var cardId = "card_" + col + "_" + row;
   var div = "<div></div>";
-  var pt_loyaltyBoxDiv = $(div).addClass("pt-loyalty-box");
-  var pt_loyaltyDiv = $(div)
-    .addClass("pt-loyalty")
-    .append("<span>" + pt_loyalty + "</span>");
-  console.log("layout", layout);
-  var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
+  var cardDiv = $(div).addClass("card").attr("id", cardId);
   var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
-  $(idParent).append(cardDiv.append(pt_loyaltyBoxDiv.append(pt_loyaltyDiv)).append(imgDiv));
-  console.log("this: " + this);
-  modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
+  $(idParent).append(cardDiv);
+  for (j = 0; j < name.length; j++) {
+    var cardFlipId = cardId + "_" + j;
+    var cardFlipDiv = cardTypes.call($("#" + cardId), cardFlipId, layout[j], colors, name[j], manaCost[j], type[j], text[j], pt[j], "", col, row);
+    $("#" + cardId).append(cardFlipDiv);
+    console.log("modifyCss flip",cardFlipId, layout[j], col, row, colors, splitCardWidth,  mainCardWidth)
+    modifyCss.call( $("#" + cardFlipId), layout[j], col, row, colors, mainCardWidth,  mainCardHeight );
+    console.log("modifyCss flip - done")
+  }
+  $("#" + cardId).append(imgDiv);
 }
 
-function createLandCard(layout, colors, name, manaCost, type, text, col, row, img) {
-  var cardId = "card_" + col + "_" + row;
+function createCreaturePlaneswalkerCard(cardId, layout, colors, name, manaCost, type, text, pt_loyalty, col, row, img) {
+  var div = "<div></div>";
+  var pt_loyaltyBoxDiv = $(div).addClass("pt-loyalty-box");
+  var pt_loyaltyDiv = $(div).addClass("pt-loyalty").append("<span>" + pt_loyalty + "</span>");
+  console.log("layout", layout);
+  var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
+  $(this).append(cardDiv.append(pt_loyaltyBoxDiv.append(pt_loyaltyDiv)));
+  console.log("this: " + this);
+    console.log("modifyCss Creature",cardId, layout)
+  //modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
+  if (img != null){
+    var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
+    $("#" + cardId).append(imgDiv);
+  }
+}
+
+function createLandCard(cardId, layout, colors, name, manaCost, type, text, col, row, img) {
   var div = "<div></div>";
   if (type.includes("Basic")) {
     console.log("Basic Land");
@@ -250,17 +279,19 @@ function createLandCard(layout, colors, name, manaCost, type, text, col, row, im
   }
   var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
   var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
-  $(idParent).append(cardDiv.append(imgDiv));
-  modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
+  $(this).append(cardDiv.append(imgDiv));
+  //modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
 }
 
-function createNonPermanentCard(layout, colors, name, manaCost, type, text, col, row, img){
-  var cardId = "card_" + col + "_" + row;
+function createNonPermanentCard(cardId, layout, colors, name, manaCost, type, text, col, row, img){
   var div = "<div></div>";
   var cardDiv = createCard(layout, name, manaCost, type, text, cardId);
-  var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
-  $(idParent).append(cardDiv.append(imgDiv));
-  modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
+  $(this).append(cardDiv);
+  //modifyCss.call($("#" + cardId), layout, col, row, colors, mainCardWidth, mainCardHeight);
+  if (img != null){
+    var imgDiv = $(div).addClass("card-img").append("<img src='" + img + "'/>");
+    $("#" + cardId).append(imgDiv);
+  }
 }
 
 function createCard(layout, name, manaCost, type, text, cardId) {
@@ -326,6 +357,24 @@ function createCard(layout, name, manaCost, type, text, cardId) {
       .append(artSpaceDiv)
       .append(typeBarDiv.append(typeDiv))
       .append(txtSpaceDiv.append(txtDiv));
+  } else if (layout.includes("flip-up")) {
+    var cardFlipUp = $(div)
+      .addClass("card-flip-up")
+      .attr("id", cardId);
+    return $(cardFlipUp)
+      .append(nameBarDiv.append(nameDiv).append(manaCostDiv))
+      .append(artSpaceDiv)
+      .append(typeBarDiv.append(typeDiv))
+      .append(txtSpaceDiv.append(txtDiv));
+  } else if (layout.includes("flip-down")) {
+    var cardFlipDown = $(div)
+      .addClass("card-flip-down")
+      .attr("id", cardId);
+    return $(cardFlipDown)
+      .append(nameBarDiv.append(nameDiv).append(manaCostDiv))
+      .append(artSpaceDiv)
+      .append(typeBarDiv.append(typeDiv))
+      .append(txtSpaceDiv.append(txtDiv));
   } else {
     var cardDiv = $(div).addClass("card").attr("id", cardId);
     return $(cardDiv)
@@ -355,6 +404,20 @@ function modifyCss(layout, col, row, colors, cardWidth, cardHeight) {
   } else if (layout.includes("aftermath")) {
     console.log(j, cardHeight);
     this.css({"transform": "translate(" + (j * cardWidth - (cardPadding + 1)) + "px," +  (j * mainCardHeight / 2 - (cardPadding + 1)) + "px)" });
+    this.find(".art-space").height($(".art-space").height() / 2);
+    cardHeight = mainCardHeight / 2 - (cardPadding + 1);
+  } else if (layout.includes("flip-up")) {
+    console.log(j, cardHeight);
+    this.css({"transform": "translate(" + (j * cardWidth - (cardPadding + 1)) + "px," +  (j * mainCardHeight / 2 - (cardPadding + 1)) + "px)" });
+    this.find(".art-space").height($(".art-space").height() / 2);
+    cardHeight = mainCardHeight / 2 - (cardPadding + 1);
+  } else if (layout.includes("flip-down")) {
+    console.log(j, cardHeight);
+    this.css({"transform": "rotate(180deg) translate(-" + (j * cardWidth - (cardPadding + 1)) + "px, -" + (j * cardHeight - (cardPadding + 1)) + "px)"
+    });
+    //For .card as absolute this.parent().css({"margin-left": col * mainCardWidth + "px","margin-top": row * mainCardHeight + "px"});
+    this.parent().attr('style', '');
+    this.parent().css({"margin-left": col * mainCardWidth + "px","margin-top": multipler * mainCardHeight + "px" });
     this.find(".art-space").height($(".art-space").height() / 2);
     cardHeight = mainCardHeight / 2 - (cardPadding + 1);
   } else {
