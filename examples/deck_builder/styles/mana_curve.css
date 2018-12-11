@@ -1,0 +1,234 @@
+:root {
+    --img-width: 50px;
+	--col-border: 1px;
+	--text-size: 15px;
+    --bar-height: 50px;
+}
+
+#mana-curve {
+  margin-top: 20px;
+}
+
+.card-container {
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: flex-start; */
+  display: table;
+  height: 100%;
+  width: 100%;
+  max-width: var(--main-width);
+}
+
+.card-container .column-wrapper {
+  border: solid var(--col-border) transparent;
+  /* flex: 1; */
+  max-width: var(--main-width);
+  min-height: var(--main-height);
+  display: table-cell;
+  /* vertical-align: bottom; */
+}
+
+.card-container .column-wrapper > div.card-image {
+  display: inline-block;
+  margin-top: -126%;
+}
+
+.card-container.bottom > div { vertical-align: bottom; }
+
+.card-container .column-wrapper > div.card-image:first-child {
+  margin-top: 0;
+  /* display: inline-block; */
+  /* margin-top: -126%; */
+}
+
+.card-container .column-wrapper > div.card-image:hover img {
+  z-index: 9;
+}
+.card-container .column-wrapper > div.card-image:hover input {
+  z-index: 10;
+}
+
+
+.column-wrapper .card-image > img{
+  display: block;
+  width: var(--img-width);
+  max-width: var(--main-width);
+  min-width: 50px;
+  position: relative;
+  z-index: 0;
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+.column-wrapper .card-image > input{
+  display: block;
+  position: absolute;
+  z-index: 1;
+  margin: 10px;
+}
+.column-wrapper .card-image >  div.no-card{
+  display: block;
+  width: var(--img-width);
+  max-width: var(--main-width);
+  min-width: 50px;
+  position: relative;
+  z-index: 0;
+}
+.chart-area{
+  width: 100%;
+}
+.chart-area .mana-bar{
+  float: left;
+  height: 200px;
+  margin-right: 3px;
+}
+.chart-area .mana-bar > div.mana-fill{
+  width: var(--img-width);
+  position: relative;
+  background: #000;
+}
+
+.chart-area .bar {
+  fill: red;
+  height: 21px;
+  transition: fill .3s ease;
+  cursor: pointer;
+  font-family: Helvetica, sans-serif;
+}
+
+.chart-area .bar > text  {
+    fill: #fff;
+	font-size: var(--text-size);
+}
+
+.chart-area .bar-target {
+  fill: #00000059;
+  height: 21px;
+  transition: fill .3s ease;
+  cursor: pointer;
+  font-family: Helvetica, sans-serif;
+}
+
+.chart-area .labels.x-labels {
+  text-anchor: middle;
+}
+
+#mana-color{
+	margin-bottom: 20px;
+}
+
+dl {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  width: 100%;
+  max-width: 700px;
+  position: relative;
+}
+
+dd {
+  display: flex;
+  margin: 5px 0;
+}
+.mana-icon {
+  background-repeat: no-repeat;
+  width: var(--bar-height);
+  height: var(--bar-height);
+  margin-right: 5px;
+  float: left;
+}
+
+dd > div.bar{
+  height: 20px;
+  margin-right: 5px;
+  overflow: hidden;
+  text-align: right;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+@keyframes bake-pie {
+  from {
+    transform: rotate(0deg) translate3d(0,0,0);
+  }
+}
+
+.mana-color-pie {
+  display: inline-block;
+  vertical-align: top;
+}
+.pie {
+  height: 200px;
+  width: 200px;
+  position: relative;
+  margin: 0 30px 30px 0;
+  padding: 15px;
+}
+
+.slice {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  clip: rect(0px, 200px, 200px, 100px);
+  animation: bake-pie 1s;
+}
+.slice span {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  clip: rect(0px, 200px, 200px, 100px);
+}
+.legend {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  background: #FFF;
+  padding: 15px;
+  font-size: 13px;
+  box-shadow: 1px 1px 0 #DDD, 2px 2px 0 #BBB;
+}
+.legend li {
+  width: 100%;
+  height: var(--bar-height);
+  margin-bottom: 0.7em;
+  padding-left: 0.5em;
+  /*border-left: var(--bar-height) solid black;*/
+}
+.legend em {
+  font-style: normal;
+}
+.legend div.mana-bar {
+  float: left;
+  height: var(--bar-height);
+}
+.legend span,
+.legend div.mana-qnt {
+  float: right;
+}
+
+form.mana-input-form{
+  position: absolute;
+  z-index: 10;
+  width: 200px;
+  margin-top: 51px;
+  text-align: center;
+}
+form.mana-input-form > input{
+  width: 94px;
+  height: 94px;
+  display: inline-block;
+  border: 1px dotted #999;
+  border-radius: 47px;
+  text-align: center;
+  font-size:45px;
+}
+
+form.mana-input-form > input:focus{
+  outline: none;
+}
