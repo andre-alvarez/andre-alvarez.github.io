@@ -96,7 +96,10 @@ function readDataBase() {
         createSideboardToken(col, row);
       } else {
         var cardName = arrayCards[i];
-        var card = data.findIndex(p => p.name.includes(cardName));
+        var card = data.findIndex(p => (p.name == cardName));
+        if (card == -1){
+          var card = data.findIndex(p => p.name.includes(cardName));
+        }
         layout = data[card].layout;
         if (layout === "split") {
           //console.log(splitCardSeparator);
