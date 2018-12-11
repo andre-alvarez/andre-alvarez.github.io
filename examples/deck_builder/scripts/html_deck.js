@@ -9,6 +9,9 @@ var splitCardWidth = mainCardHeight / 2;
 var page = 1;
 var idParent = "#cards";
 var cardsCount = 1;
+var splitCardSeparator = " // ";
+var sideBoard = "SIDEBOARD";
+var sideboardListShow;
 
 var landColor = [
   ["Forest", "Green", "{G}"],
@@ -30,17 +33,23 @@ loadDeck();
 readDataBase();
 
 function loadDeck() {
-  console.log(window.location.search);
+  console.log("link",window.location.search);
   var user_input_data = window.location.search;
   user_input_data = user_input_data.split("&");
   console.log(window.location.search);
   var deckName = user_input_data[0].replace("?deck-name=", "");
   deckName = deckName.replace("+", " ");
-  var deckList = user_input_data[1].replace("deck-list=", "");
-  deckList = deckList.split("%0D%0A").join("<br>");
+  var mainList = user_input_data[1].replace("main-board=", "");
+  mainList = mainList.split("%0D%0A").join("<br>");
+  var sideList = user_input_data[2].replace("side-board=", "");
+  sideList = sideList.split("%0D%0A").join("<br>");
+  //var deckList = mainList + "<br><br>" + sideBoard + "<br><br>" + sideList
+  var deckList = mainList + "<br><br>" + sideList
   var deckListShow = deckList
     .split("%2F").join("/").split("%27").join("'").split("%2C").join(",").split("+").join(" ");
   console.log(deckName);
+  console.log(mainList);
+  console.log(sideList);
   console.log(deckList);
   document.getElementById("deck-name").innerHTML = deckName;
   document.getElementById("deck-list").innerHTML = deckListShow;
@@ -48,6 +57,12 @@ function loadDeck() {
   for (var j = 0; j < deckList.length; j++) {
     console.log(deckList[j]);
     var jCard = deckList[j].replace("+", " ").split(" ");
+    if (jCard[0].replace(" ", "").toUpperCase() === sideBoard){
+      sideboardListShow = deckListShow.split(jCard[0])[1];
+      jCard[0] = 1;
+      jCard[1] = sideBoard;
+      console.log("sideboardListShow",sideboardListShow);
+    }
     console.log(jCard[0]);
     console.log(jCard[0] * 2);
     console.log(jCard[1]);
