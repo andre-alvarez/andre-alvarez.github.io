@@ -121,16 +121,26 @@ function manaCurve(data, cards, idBoard ){
     var layout, colors, name, manaCost, type, cmc, pt, loyalty, img;
     for (var i = 0; i < cards.length; i++) {
       var cardName = cards[i];
-      var card = data.findIndex(p => p.name.includes(cardName));
+      var card = data.findIndex(p => (p.name == cardName));
+	  if (card == -1){
+        var card = data.findIndex(p => p.name.includes(cardName));
+	  }
+      console.log("card",card);
+      name = data[card].name;
+      cmc = data[card].cmc;
+      console.log(cmc,name);
       layout = data[card].layout;
       colors = data[card].colors;
-      name = data[card].name;
-      manaCost = data[card].mana_cost;
+	  if (layout === "transform"){
+        manaCost = data[card].card_faces[0].mana_cost;
+        img = data[card].card_faces[0].image_uris.large;
+		type = data[card].card_faces[0].type_line;
+	  }else{
+        manaCost = data[card].mana_cost;  
+        img = data[card].image_uris.large;
+		type = data[card].type_line;
+	  }
 	  allManaCosts = allManaCosts + manaCost
-      cmc = data[card].cmc;
-      type = data[card].type_line;
-      img = data[card].image_uris.large;
-      console.log(cmc,name);
       if(type.includes("Land")){
         tmpArrays = new Array(2);
         tmpArrays[0] = cmc;
@@ -238,7 +248,7 @@ function imgWidthFix(){
 function manaCurveChart(){
   var textSize = 15
   document.documentElement.style.setProperty("--text-size",textSize + "px");
-  var divWidth = document.getElementById("deck-curve").offsetWidth;
+  var divWidth = document.getElementById("main-curve-spells").offsetWidth
   //var maxValeu = console.log(Math.max.apply(Math, maxValeu.map(function (i) { return i[0];})));
   var maxValeu = Math.max(...manaChart);
   manaColsHeight = Math.ceil(maxValeu * (textSize * 1.1));
@@ -249,7 +259,7 @@ function manaCurveChart(){
   var cardDiv = document.getElementsByClassName("chart-area");
   var svgDiv = document.createElementNS('http://www.w3.org/2000/svg','svg');
   svgDiv.setAttribute("height", manaColsHeight + 20);
-  svgDiv.setAttribute("width", "100%");
+  svgDiv.setAttribute("width", divWidth); //"100%");
   chartDiv.append(svgDiv);
   var xLabel = document.createElementNS("http://www.w3.org/2000/svg", "g");
   xLabel.setAttribute("class" , "labels x-labels");
@@ -257,6 +267,7 @@ function manaCurveChart(){
   //manaChart = manaChart.map(function(i) { return [(i[0] / maxValeu * 100),i[1]];});
   //manaChartCols = manaChart.map(function(x) { return x / maxValeu * manaColsHeight; });
   manaChartCols = manaChart.map(function(x) { return Math.ceil(x * (textSize * 1.1)); });
+  barWidth = divWidth/manaChartCols.length
   for (w = 0; w < manaChartCols.length; w++){
     //var colHeight = manaChart[w][0];
     var colHeight = manaChartCols[w];
